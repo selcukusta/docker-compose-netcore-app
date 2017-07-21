@@ -1,0 +1,22 @@
+version: '3.3'
+ 
+services:
+  sample-site:
+    build:
+      context:  ./dotnetcore-app
+      dockerfile: Dockerfile
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+ 
+  proxy:
+    build:
+      context:  ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    links:
+      - sample-site
+    depends_on:
+      - sample-site
